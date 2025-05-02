@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Графік прибирання (травень 2025)</title>
   <style>
     body {
@@ -74,7 +74,7 @@
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
 
-      const key = `cleaning_done_${index}`;
+      const key = cleaning_done_${index};
       checkbox.checked = localStorage.getItem(key) === "true";
 
       checkbox.addEventListener("change", () => {
