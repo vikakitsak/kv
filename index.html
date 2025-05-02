@@ -41,7 +41,7 @@
   </table>
 
   <script>
-    const key = cleaning_done_${index};
+    const schedule = [
       ["3 травня", "2 кім."],
       ["5 травня", "1 кім."],
       ["7 травня", "2 кім."],
@@ -74,7 +74,7 @@
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
 
-      const key = cleaning_done_${index};
+      const key = `cleaning_done_${index}`;
       checkbox.checked = localStorage.getItem(key) === "true";
 
       checkbox.addEventListener("change", () => {
