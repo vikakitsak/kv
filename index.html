@@ -14,6 +14,14 @@
             padding: 10px 20px;
             font-size: 16px;
         }
+        #successMessage {
+            display: none;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
     </style>
 
     <!-- Підключення Firebase SDK -->
@@ -86,15 +94,28 @@
                 setDoc(docRef, {
                     is_cleaned: isCleaned
                 }).then(() => {
-                    alert('Зміни збережено!');
+                    showSuccessMessage();  // Показуємо повідомлення про успіх
                 }).catch((error) => {
                     console.error("Error adding document: ", error);
                 });
             });
         });
+
+        // Функція для показу повідомлення про успіх
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+
+            // Через 3 секунди ховаємо повідомлення
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
     </script>
 </head>
 <body>
+    <div id="successMessage">Зміни збережено!</div>  <!-- Повідомлення про успіх -->
+    
     <h2>Графік Прибирань (3 травня – 2 липня)</h2>
     <form id="cleaningForm">
         <table id="scheduleTable">
