@@ -15,13 +15,15 @@
             font-size: 16px;
         }
         #successMessage {
-            display: none;
+            display: block;
             padding: 10px;
             background-color: #4CAF50;
             color: white;
             margin-bottom: 20px;
             text-align: center;
-            transition: opacity 0.5s ease-in-out; /* Додаємо плавне згасання */
+            visibility: hidden;  /* Початково сховане */
+            opacity: 0;          /* Початкова непрозорість */
+            transition: opacity 0.5s ease-in-out, visibility 0s 0.5s; /* Анімація */
         }
     </style>
 
@@ -105,15 +107,13 @@
         // Функція для показу повідомлення про успіх
         function showSuccessMessage() {
             const successMessage = document.getElementById('successMessage');
-            successMessage.style.display = 'block';  // Показуємо повідомлення
-            successMessage.style.opacity = '1';  // Плавно відображаємо повідомлення
+            successMessage.style.visibility = 'visible';  // Зробити видимим
+            successMessage.style.opacity = '1';           // Зробити прозорим
 
             // Через 3 секунди ховаємо повідомлення
             setTimeout(() => {
-                successMessage.style.opacity = '0';  // Плавно згасаємо повідомлення
-                setTimeout(() => {
-                    successMessage.style.display = 'none';  // В кінці згортаємо його
-                }, 500);  // Чекаємо завершення анімації згасання
+                successMessage.style.opacity = '0';  // Плавно згасаємо
+                successMessage.style.visibility = 'hidden';  // Ховаємо повідомлення через затримку
             }, 3000);
         }
     </script>
