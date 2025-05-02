@@ -2,91 +2,72 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Графік прибирання (травень 2025)</title>
+  <title>Графік Прибирань</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 30px;
     }
     table {
-      width: 100%;
       border-collapse: collapse;
-      background: #fff;
+      width: 100%;
+      max-width: 600px;
     }
     th, td {
-      border: 1px solid #ccc;
-      padding: 12px;
+      border: 1px solid #999;
+      padding: 8px;
       text-align: center;
     }
     th {
-      background-color: #e0e0e0;
+      background-color: #eee;
     }
   </style>
 </head>
 <body>
-  <h1>Графік прибирання (травень 2025)</h1>
-  <table>
+  <h2>Графік Прибирань (3 травня – 2 липня)</h2>
+  <table id="schedule">
     <thead>
       <tr>
         <th>Дата</th>
-        <th>Черга кімнати</th>
-        <th>Позначено виконаним</th>
+        <th>Кімната</th>
+        <th>Прибрано</th>
       </tr>
     </thead>
-    <tbody id="schedule-table"></tbody>
+    <tbody></tbody>
   </table>
 
   <script>
-    const schedule = [
-      ["3 травня", "2 кім."],
-      ["5 травня", "1 кім."],
-      ["7 травня", "2 кім."],
-      ["9 травня", "1 кім."],
-      ["11 травня", "2 кім."],
-      ["13 травня", "1 кім."],
-      ["15 травня", "2 кім."],
-      ["17 травня", "1 кім."],
-      ["19 травня", "2 кім."],
-      ["21 травня", "1 кім."],
-      ["23 травня", "2 кім."],
-      ["25 травня", "1 кім."],
-      ["27 травня", "2 кім."],
-      ["29 травня", "1 кім."],
-      ["31 травня", "2 кім."]
-    ];
+    const startDate = new Date("2025-05-03");
+    const daysToGenerate = 60; // приблизно 2 місяці
+    const tableBody = document.querySelector("#schedule tbody");
 
-    const tableBody = document.getElementById("schedule-table");
+    for (let i = 0; i < daysToGenerate; i += 2) {
+      const date = new Date(startDate);
+      date.setDate(date.getDate() + i);
+      const dateStr = date.toISOString().split('T')[0];
 
-    schedule.forEach(([date, room], index) => {
-      const tr = document.createElement("tr");
+      const room = (i / 2) % 2 === 0 ? "Кімната 2" : "Кімната 1";
+      const checkboxId = `chk-${dateStr}`;
 
-      const dateTd = document.createElement("td");
-      dateTd.textContent = date;
+      const row = document.createElement("tr");
 
-      const roomTd = document.createElement("td");
-      roomTd.textContent = room;
+      row.innerHTML = `
+        <td>${date.toLocaleDateString('uk-UA')}</td>
+        <td>${room}</td>
+        <td><input type="checkbox" id="${checkboxId}"></td>
+      `;
 
-      const checkTd = document.createElement("td");
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
+      tableBody.appendChild(row);
 
-      const key = cleaning_done_${index};
-      checkbox.checked = localStorage.getItem(key) === "true";
+      const checkbox = row.querySelector("input[type='checkbox']");
+      // Відновлення з localStorage
+      checkbox.checked = localStorage.getItem(checkboxId) === "true";
 
+      // Збереження в localStorage при зміні
       checkbox.addEventListener("change", () => {
-        localStorage.setItem(key, checkbox.checked);
+        localStorage.setItem(checkboxId, checkbox.checked);
       });
-
-      checkTd.appendChild(checkbox);
-      tr.appendChild(dateTd);
-      tr.appendChild(roomTd);
-      tr.appendChild(checkTd);
-      tableBody.appendChild(tr);
-    });
+    }
   </script>
 </body>
 </html>
